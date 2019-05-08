@@ -1,0 +1,111 @@
+{template "install/header.html"}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-edit font-green"></i>
+            <span class="caption-subject font-green">網站資訊</span>
+        </div>
+    </div>
+    <div class="portlet-body ">
+        <div class="scroller" style="height:300px" data-rail-visible="1">
+        <form action="#" id="myform" class="form-horizontal form-bordered ">
+            {dr_form_hidden()}
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="control-label col-md-3">網站名稱</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[name]" value="網站名稱" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">創始人帳號</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[username]" value="admin" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">創始人郵箱</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[email]" value="" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">創始人密碼</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[password]" value="admin" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">資料庫地址</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[db_host]" value="127.0.0.1" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">資料庫帳號</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[db_user]" value="" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">資料庫密碼</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[db_pass]" value="" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">資料庫名稱</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[db_name]" value="" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">資料表首碼</label>
+                    <div class="col-md-7">
+                        <input type="text" name="data[db_prefix]" value="dr_" class="form-control" placeholder="">
+                    </div>
+                </div>
+                {if DR_CMS == 10}
+                <div class="form-group">
+                    <label class="control-label col-md-3">安裝測試數據</label>
+                    <div class="col-md-7">
+                        <div class="mt-radio-inline">
+                            <label class="mt-radio">
+                                <input type="radio" name="is_install_db" value="1" checked=""> 安裝
+                                <span></span>
+                            </label>
+                            <label class="mt-radio">
+                                <input type="radio" name="is_install_db" value="0"> 不安裝
+                                <span></span>
+                            </label>
+                        </div>
+                        <p class="help-block"> 新手建議選擇安裝測試數據，方便快速入門 </p>
+                    </div>
+                </div>
+                {/if}
+            </div>
+
+        </form>
+    </div>
+    </div>
+    <div class="portlet-title" style="min-height: 18px;">
+    </div>
+    <div class="portlet-body text-center">
+        <a href="javascript:dr_next_install();" class="btn btn-success"> 下一步安裝 </a>
+    </div>
+</div>
+<script>
+    function dr_next_install() {
+        $.ajax({type: "POST",dataType:"json", url: '{dr_now_url()}', data: $("#myform").serialize(),
+            success: function(json) {
+                if (json.code == 1) {
+                    window.location.href = json.msg;
+                } else {
+                    layer.alert(json.msg);
+                }
+            }
+        });
+    }
+</script>
+{template "install/footer.html"}
